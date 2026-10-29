@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { hero, cta, contact } from '../content/site';
+import { url } from '../utils/url';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
@@ -20,29 +21,8 @@ import { hero, cta, contact } from '../content/site';
       </p>
     </div>
 
-    <figure class="hero__art" aria-hidden="true">
-      <svg viewBox="-30 0 460 400" fill="none" stroke-linecap="round">
-        <circle cx="200" cy="200" r="150" stroke="var(--plum)" stroke-width="1.2" />
-        <circle cx="200" cy="200" r="118" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6" />
-        <g stroke="var(--plum)" stroke-width="1.2">
-          <circle cx="200" cy="50" r="14" fill="var(--plum)" />
-          <circle cx="350" cy="200" r="14" fill="var(--cream)" />
-          <path d="M350 186a14 14 0 0 1 0 28Z" fill="var(--plum)" />
-          <circle cx="200" cy="350" r="14" fill="var(--cream)" />
-          <circle cx="50" cy="200" r="14" fill="var(--cream)" />
-          <path d="M50 186a14 14 0 0 0 0 28Z" fill="var(--plum)" />
-        </g>
-        <g stroke="var(--clay)" stroke-width="1.4">
-          <path d="M160 215h80M172 200v30M228 200v30M162 205v20M238 205v20" />
-          <path d="M175 160a25 14 0 0 0 50 0Z" />
-        </g>
-        <g font-family="var(--font-sans)" font-size="13" fill="var(--brown)" letter-spacing="1.5">
-          <text x="200" y="22" text-anchor="middle">TRAIN</text>
-          <text x="374" y="205">FUEL</text>
-          <text x="200" y="392" text-anchor="middle">UNDERSTAND</text>
-        </g>
-      </svg>
-      <figcaption class="script-note">{hero.note}</figcaption>
+    <figure class="hero__art">
+      <img src={url('/images/strong-with-mila-logo.svg')} alt={hero.logoAlt} width="1001" height="995" />
     </figure>
   </div>
 </section>
@@ -96,10 +76,11 @@ import { hero, cta, contact } from '../content/site';
     max-width: 26rem;
     justify-self: center;
     width: 100%;
-    text-align: center;
   }
-  .hero__art .script-note {
-    margin-top: 0.5rem;
+  .hero__art img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   @media (max-width: 30rem) {
     .hero__actions .btn {

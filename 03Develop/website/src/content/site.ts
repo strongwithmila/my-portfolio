@@ -53,7 +53,7 @@ export const hero = {
   headlineAccent: 'built around your body, your cycle and your real life.',
   subheadline:
     'Onsite personal training, realistic nutrition support and weekly check-ins for women who want to build strength, structure and confidence without extremes.',
-  note: 'train · fuel · understand',
+  logoAlt: 'Strong with Mila logo: Strength, Nutrition, Cycle Aware',
 };
 
 export const resonance = {
