@@ -1,6 +1,7 @@
 ---
 import Base from './Base.astro';
 import Wordmark from '../components/Wordmark.astro';
+import { url } from '../utils/url';
 
 interface Props {
   title: string;
@@ -10,10 +11,10 @@ const { title } = Astro.props;
 
 <Base title={`${title} | Strong with Mila`} noindex>
   <main id="main" class="container legal">
-    <a href="/" class="legal__home" aria-label="Strong with Mila, home"><Wordmark /></a>
+    <a href={url('/')} class="legal__home" aria-label="Strong with Mila, home"><Wordmark /></a>
     <h1>{title}</h1>
     <slot />
-    <p><a href="/">← Back to the homepage</a></p>
+    <p><a href={url('/')}>← Back to the homepage</a></p>
   </main>
 </Base>
 

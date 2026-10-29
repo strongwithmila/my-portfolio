@@ -4,6 +4,7 @@ import '@fontsource-variable/montserrat';
 import '@fontsource/allura';
 import '../styles/global.css';
 import { seo } from '../content/site';
+import { url } from '../utils/url';
 
 interface Props {
   title?: string;
@@ -25,7 +26,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     {canonical && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#F7F3EE" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
