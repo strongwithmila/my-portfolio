@@ -1,0 +1,65 @@
+---
+import { resonance } from '../content/site';
+---
+
+<section class="section section--alt" aria-labelledby="resonance-title">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <h2 id="resonance-title">{resonance.heading}</h2>
+      <p class="lead">{resonance.intro}</p>
+    </div>
+
+    <ul class="cards">
+      {resonance.cards.map((c) => (
+        <li class="card">
+          <p class="card__quote">“{c.quote}”</p>
+          <p class="card__detail">{c.detail}</p>
+        </li>
+      ))}
+    </ul>
+
+    <p class="close">{resonance.close}</p>
+  </div>
+</section>
+
+<style>
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .card {
+    background: var(--cream);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    border: 1px solid var(--line);
+  }
+  .card__quote {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    line-height: 1.35;
+    color: var(--plum);
+    margin-bottom: 0.75rem;
+  }
+  .card__detail {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .close {
+    max-width: 34rem;
+    margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.6rem);
+    line-height: 1.4;
+    color: var(--plum);
+  }
+  @media (min-width: 48rem) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+</style>

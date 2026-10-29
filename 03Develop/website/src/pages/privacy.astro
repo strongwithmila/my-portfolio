@@ -1,0 +1,20 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { contact } from '../content/site';
+---
+
+<Legal title="Privacy policy">
+  <p class="draft">
+    Placeholder — the full Datenschutzerklärung must be written and legally reviewed before this site goes live.
+  </p>
+  <p>Points the final policy will need to cover (for the reviewer):</p>
+  <ul>
+    <li>Controller name and address, and contact: {contact.email}</li>
+    <li>What the enquiry form collects (name, email, goal, optional message), the purpose (replying to the enquiry) and the legal basis</li>
+    <li>Which form service or email provider processes submissions, and any data-processing agreement</li>
+    <li>Hosting provider and server logs</li>
+    <li>How long enquiries are kept and how to request deletion</li>
+    <li>Visitor rights under the GDPR and the right to complain to a supervisory authority</li>
+    <li>Fonts are self-hosted; the site sets no cookies and uses no analytics or tracking at present</li>
+  </ul>
+</Legal>

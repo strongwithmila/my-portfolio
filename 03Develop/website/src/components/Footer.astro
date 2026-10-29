@@ -1,0 +1,78 @@
+---
+import Wordmark from './Wordmark.astro';
+import Icon from './Icon.astro';
+import { contact, instagramUrl, footer } from '../content/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div>
+      <Wordmark />
+      <p class="footer__tag">Women’s strength coaching · {contact.city}</p>
+    </div>
+
+    <ul class="footer__links" aria-label="Contact">
+      <li><a href={instagramUrl} rel="noopener" target="_blank"><Icon name="instagram" size={20} />@{contact.instagramHandle}</a></li>
+      <li><a href={`mailto:${contact.email}`}><Icon name="mail" size={20} />{contact.email}</a></li>
+    </ul>
+
+    <ul class="footer__links" aria-label="Legal">
+      <li><a href="/privacy">Privacy policy (Datenschutz)</a></li>
+      <li><a href="/imprint">Legal notice (Impressum)</a></li>
+    </ul>
+  </div>
+  <div class="container footer__bottom">
+    <p>{footer.disclaimer}</p>
+    <p>© {year} Strong with Mila</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--offwhite);
+    border-top: 1px solid var(--line);
+    padding-block: 3.5rem 2rem;
+    font-size: 0.92rem;
+  }
+  .footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+  .footer__tag {
+    margin: 0.5rem 0 0;
+  }
+  .footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .footer__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--brown);
+    overflow-wrap: anywhere;
+  }
+  .footer__links a:hover {
+    color: var(--plum);
+  }
+  .footer__bottom {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.82rem;
+  }
+  .footer__bottom p {
+    margin: 0;
+  }
+  @media (min-width: 52rem) {
+    .footer__grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+import { cycle } from '../content/site';
+
+// Labels sit evenly around the circle, like notebook annotations.
+const r = 150;
+const placed = cycle.labels.map((label, i) => {
+  const a = (i / cycle.labels.length) * Math.PI * 2 - Math.PI / 2;
+  return { label, x: 200 + Math.cos(a) * r, y: 200 + Math.sin(a) * r, dx: Math.cos(a), dy: Math.sin(a) };
+});
+---
+
+<section class="section" aria-labelledby="cycle-title">
+  <div class="container cycle">
+    <div class="cycle__copy">
+      <p class="eyebrow">Body literacy</p>
+      <h2 id="cycle-title">{cycle.heading}</h2>
+      {cycle.paragraphs.map((p) => <p>{p}</p>)}
+      <p class="cycle__tagline">{cycle.tagline}</p>
+    </div>
+
+    <figure class="cycle__diagram">
+      <svg viewBox="-70 0 540 400" role="img" aria-labelledby="cycle-diagram-title">
+        <title id="cycle-diagram-title">
+          A cycle wheel with patterns worth noticing: {cycle.labels.join(', ')}.
+        </title>
+        <circle cx="200" cy="200" r="100" fill="none" stroke="var(--navy)" stroke-width="1.2" />
+        <circle cx="200" cy="200" r="70" fill="none" stroke="var(--line)" stroke-dasharray="2 5" />
+        <text x="200" y="196" text-anchor="middle" font-family="var(--font-serif)" font-size="17" fill="var(--navy)">your</text>
+        <text x="200" y="218" text-anchor="middle" font-family="var(--font-serif)" font-size="17" fill="var(--navy)">patterns</text>
+        {placed.map((p) => (
+          <g>
+            <line
+              x1={200 + p.dx * 100}
+              y1={200 + p.dy * 100}
+              x2={200 + p.dx * 128}
+              y2={200 + p.dy * 128}
+              stroke="var(--navy)"
+              stroke-width="1"
+            />
+            <circle cx={200 + p.dx * 100} cy={200 + p.dy * 100} r="4" fill="var(--navy)" />
+            <text
+              x={p.x}
+              y={p.y + 5}
+              text-anchor={Math.abs(p.dx) < 0.2 ? 'middle' : p.dx > 0 ? 'start' : 'end'}
+              font-family="var(--font-sans)"
+              font-size="14"
+              letter-spacing="1"
+              fill="var(--brown)"
+            >
+              {p.label}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .cycle {
+    display: grid;
+    gap: clamp(2rem, 6vw, 4rem);
+    align-items: center;
+  }
+  .cycle__tagline {
+    margin-top: 1.75rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--navy);
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 1.1rem + 1vw, 1.75rem);
+    line-height: 1.3;
+    color: var(--navy);
+  }
+  .cycle__diagram {
+    margin: 0;
+    max-width: 24rem;
+    width: 100%;
+    justify-self: center;
+    overflow: visible;
+  }
+  .cycle__diagram svg {
+    overflow: visible;
+  }
+  @media (min-width: 56rem) {
+    .cycle {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+</style>

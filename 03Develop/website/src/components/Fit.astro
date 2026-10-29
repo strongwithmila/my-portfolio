@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import { fit } from '../content/site';
+---
+
+<section class="section" aria-labelledby="fit-title">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <h2 id="fit-title">{fit.heading}</h2>
+    </div>
+
+    <div class="fit">
+      <div class="fit__col fit__col--yes">
+        <h3>A good fit if…</h3>
+        <ul>
+          {fit.forYou.map((t) => <li><Icon name="check" size={20} />{t}</li>)}
+        </ul>
+      </div>
+      <div class="fit__col fit__col--no">
+        <h3>Probably not for you if…</h3>
+        <ul>
+          {fit.notForYou.map((t) => <li><Icon name="cross" size={20} />{t}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <p class="scope"><strong>Scope:</strong> {fit.scopeNote}</p>
+  </div>
+</section>
+
+<style>
+  .fit {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .fit__col {
+    padding: clamp(1.75rem, 4vw, 2.25rem);
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+  .fit__col--yes {
+    --accent: var(--forest);
+  }
+  .fit__col--no {
+    --accent: var(--burgundy);
+    background: transparent;
+  }
+  .fit h3 {
+    color: var(--accent);
+  }
+  .fit ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .fit li {
+    display: flex;
+    gap: 0.65rem;
+    padding: 0.4rem 0;
+    font-size: 0.97rem;
+  }
+  .fit li :global(svg) {
+    flex: none;
+    color: var(--accent);
+    margin-top: 0.2rem;
+  }
+  .scope {
+    max-width: 44rem;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-size: 0.92rem;
+  }
+  @media (min-width: 52rem) {
+    .fit {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

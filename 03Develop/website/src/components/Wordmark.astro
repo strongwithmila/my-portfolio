@@ -1,0 +1,29 @@
+---
+// Typographic approximation of the wordmark. Replace with the official logo file
+// (e.g. /public/logo.svg) once supplied — the real logo takes priority.
+---
+
+<span class="wordmark">
+  <span class="wordmark__strong">strong</span>
+  <span class="wordmark__with">with Mila</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    color: var(--plum);
+    line-height: 1;
+  }
+  .wordmark__strong {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .wordmark__with {
+    font-family: var(--font-script);
+    font-size: 1.65rem;
+  }
+</style>

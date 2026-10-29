@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+import { method } from '../content/site';
+
+const accent: Record<string, string> = {
+  train: 'var(--plum)',
+  fuel: 'var(--forest)',
+  understand: 'var(--navy)',
+};
+---
+
+<section class="section" id="method" aria-labelledby="method-title">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">The method</p>
+      <h2 id="method-title">{method.heading}</h2>
+      <p class="lead">{method.intro}</p>
+    </div>
+
+    <ol class="pillars">
+      {method.pillars.map((p, i) => (
+        <li class="pillar" style={`--accent: ${accent[p.key]}`}>
+          <span class="pillar__num">0{i + 1}</span>
+          <Icon name={p.key as 'train' | 'fuel' | 'understand'} size={52} class="pillar__icon" />
+          <h3>{p.name}</h3>
+          <p class="pillar__summary">{p.summary}</p>
+          <ul>
+            {p.points.map((pt) => <li>{pt}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+
+    <p class="method__close"><span>{method.close}</span></p>
+  </div>
+</section>
+
+<style>
+  .pillars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .pillar {
+    position: relative;
+    padding: 2rem 1.75rem;
+    border-radius: var(--radius);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+  }
+  .pillar__num {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--brown);
+    opacity: 0.7;
+  }
+  :global(.pillar__icon) {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .pillar h3 {
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .pillar__summary {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .pillar ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+  }
+  .pillar li::marker {
+    color: var(--accent);
+  }
+  .method__close {
+    margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
+    max-width: 40rem;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.45rem);
+    line-height: 1.45;
+    color: var(--plum);
+  }
+  @media (min-width: 52rem) {
+    .pillars {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import Base from './Base.astro';
+import Wordmark from '../components/Wordmark.astro';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<Base title={`${title} | Strong with Mila`} noindex>
+  <main id="main" class="container legal">
+    <a href="/" class="legal__home" aria-label="Strong with Mila, home"><Wordmark /></a>
+    <h1>{title}</h1>
+    <slot />
+    <p><a href="/">← Back to the homepage</a></p>
+  </main>
+</Base>
+
+<style>
+  .legal {
+    max-width: 44rem;
+    padding-block: 3rem 5rem;
+  }
+  .legal__home {
+    display: inline-block;
+    margin-bottom: 3rem;
+    text-decoration: none;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.8rem);
+  }
+  .legal :global(.draft) {
+    padding: 1rem 1.25rem;
+    border: 1.5px dashed var(--burgundy);
+    border-radius: 0.65rem;
+    color: var(--burgundy);
+    font-weight: 600;
+  }
+</style>

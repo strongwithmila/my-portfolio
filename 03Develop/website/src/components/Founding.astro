@@ -1,0 +1,54 @@
+---
+// Only rendered when `founding.enabled` is true in content/site.ts.
+import { founding, contact, instagramUrl } from '../content/site';
+---
+
+<section class="founding" aria-labelledby="founding-title">
+  <div class="container founding__inner">
+    <h2 id="founding-title">{founding.heading}</h2>
+    <p class="lead">{founding.body}</p>
+    <div class="founding__actions">
+      <a class="btn founding__btn" href="#enquire">{founding.ctaLabel}</a>
+      <a class="founding__alt" href={instagramUrl} rel="noopener" target="_blank">
+        Or send a message on Instagram: @{contact.instagramHandle}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founding {
+    background: var(--plum);
+    color: var(--cream);
+    padding-block: var(--section-y);
+    text-align: center;
+  }
+  .founding__inner {
+    max-width: 44rem;
+  }
+  .founding h2 {
+    color: var(--cream);
+  }
+  .founding__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .founding__btn {
+    background: var(--cream);
+    color: var(--plum);
+    border-color: var(--cream);
+  }
+  .founding__btn:hover {
+    background: var(--offwhite);
+  }
+  .founding__alt {
+    color: var(--cream);
+    font-size: 0.95rem;
+  }
+  .founding :focus-visible {
+    outline-color: var(--cream);
+  }
+</style>

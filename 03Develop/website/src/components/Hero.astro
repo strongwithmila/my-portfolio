@@ -1,0 +1,117 @@
+---
+import Icon from './Icon.astro';
+import { hero, cta, contact } from '../content/site';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow"><Icon name="moon" size={16} class="hero__moon" /> {hero.eyebrow}</p>
+      <h1 id="hero-title">
+        {hero.headline}<span class="hero__accent"><span class="sr-only"> — </span>{hero.headlineAccent}</span>
+      </h1>
+      <p class="lead hero__sub">{hero.subheadline}</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#enquire">{cta.primary}</a>
+        <a class="btn btn--ghost" href="#method">{cta.secondary}</a>
+      </div>
+      <p class="hero__meta">
+        <Icon name="pin" size={18} /> Onsite in {contact.city.split(',')[0]} + digital check-ins
+      </p>
+    </div>
+
+    <figure class="hero__art" aria-hidden="true">
+      <svg viewBox="-30 0 460 400" fill="none" stroke-linecap="round">
+        <circle cx="200" cy="200" r="150" stroke="var(--plum)" stroke-width="1.2" />
+        <circle cx="200" cy="200" r="118" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6" />
+        <g stroke="var(--plum)" stroke-width="1.2">
+          <circle cx="200" cy="50" r="14" fill="var(--plum)" />
+          <circle cx="350" cy="200" r="14" fill="var(--cream)" />
+          <path d="M350 186a14 14 0 0 1 0 28Z" fill="var(--plum)" />
+          <circle cx="200" cy="350" r="14" fill="var(--cream)" />
+          <circle cx="50" cy="200" r="14" fill="var(--cream)" />
+          <path d="M50 186a14 14 0 0 0 0 28Z" fill="var(--plum)" />
+        </g>
+        <g stroke="var(--clay)" stroke-width="1.4">
+          <path d="M160 215h80M172 200v30M228 200v30M162 205v20M238 205v20" />
+          <path d="M175 160a25 14 0 0 0 50 0Z" />
+        </g>
+        <g font-family="var(--font-sans)" font-size="13" fill="var(--brown)" letter-spacing="1.5">
+          <text x="200" y="22" text-anchor="middle">TRAIN</text>
+          <text x="374" y="205">FUEL</text>
+          <text x="200" y="392" text-anchor="middle">UNDERSTAND</text>
+        </g>
+      </svg>
+      <figcaption class="script-note">{hero.note}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 6.5rem) clamp(4rem, 9vw, 7rem);
+  }
+  .hero__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4rem);
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h1 {
+    font-size: clamp(2.3rem, 1.7rem + 2.4vw, 3.6rem);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+  .hero__accent {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.62em;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--burgundy);
+  }
+  .hero__sub {
+    max-width: 36rem;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .hero__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+    font-size: 0.9rem;
+    color: var(--brown);
+  }
+  .hero__art {
+    margin: 0;
+    max-width: 26rem;
+    justify-self: center;
+    width: 100%;
+    text-align: center;
+  }
+  .hero__art .script-note {
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 30rem) {
+    .hero__actions .btn {
+      width: 100%;
+    }
+    .hero__art {
+      max-width: 18rem;
+    }
+  }
+  @media (min-width: 60rem) {
+    .hero__grid {
+      grid-template-columns: 1.35fr 1fr;
+    }
+  }
+</style>

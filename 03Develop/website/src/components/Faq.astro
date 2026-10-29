@@ -1,0 +1,74 @@
+---
+import { faq } from '../content/site';
+---
+
+<section class="section section--alt" id="faq" aria-labelledby="faq-title">
+  <div class="container faq">
+    <div class="section-head">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-title">Questions, answered</h2>
+      <p>Beginner questions are welcome here. If yours isn’t listed, just ask in the enquiry form.</p>
+    </div>
+
+    <div class="faq__list">
+      {faq.map((item) => (
+        <details class="faq__item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    display: grid;
+    gap: 1rem;
+  }
+  .faq__list {
+    border-top: 1px solid var(--line);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq__item summary {
+    position: relative;
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 2.5rem 1.25rem 0;
+    font-weight: 600;
+    color: var(--brown);
+  }
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__item summary::after {
+    content: '+';
+    position: absolute;
+    right: 0.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--plum);
+    transition: transform 0.2s;
+  }
+  .faq__item[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .faq__item summary:hover {
+    color: var(--plum);
+  }
+  .faq__item p {
+    margin: 0 0 1.5rem;
+    max-width: 44rem;
+  }
+  @media (min-width: 60rem) {
+    .faq {
+      grid-template-columns: 1fr 1.8fr;
+      gap: 4rem;
+    }
+  }
+</style>

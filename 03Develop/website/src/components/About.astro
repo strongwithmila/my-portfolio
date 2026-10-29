@@ -1,0 +1,89 @@
+---
+import { about } from '../content/site';
+---
+
+<section class="section section--alt" id="about" aria-labelledby="about-title">
+  <div class="container about">
+    <figure class="about__media">
+      {about.photo ? (
+        <img src={about.photo} alt={about.photoAlt} width="560" height="700" loading="lazy" decoding="async" />
+      ) : (
+        <div class="about__placeholder" role="img" aria-label="Photo of Mila coming soon">
+          <svg viewBox="0 0 200 250" fill="none" stroke="var(--plum)" stroke-width="1.2" aria-hidden="true">
+            <circle cx="100" cy="80" r="34" />
+            <path d="M40 230c0-46 27-80 60-80s60 34 60 80" />
+            <path d="M140 40c14 8 22 20 24 34" stroke="var(--clay)" stroke-dasharray="3 5" />
+          </svg>
+          <span>Photo coming soon</span>
+        </div>
+      )}
+      <figcaption class="script-note">{about.note}</figcaption>
+    </figure>
+
+    <div class="about__copy">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title">{about.heading}</h2>
+      {about.paragraphs.map((p, i) => <p class={i === 0 ? 'lead about__first' : undefined}>{p}</p>)}
+      {about.credentials.length > 0 && (
+        <ul class="about__creds">
+          {about.credentials.map((c) => <li>{c}</li>)}
+        </ul>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    gap: clamp(2rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+  .about__media {
+    margin: 0;
+    max-width: 24rem;
+    width: 100%;
+    justify-self: center;
+    text-align: center;
+  }
+  .about__media img,
+  .about__placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 12rem 12rem var(--radius) var(--radius);
+  }
+  .about__placeholder {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 0.75rem;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .about__placeholder svg {
+    width: 55%;
+  }
+  .about__media .script-note {
+    margin-top: 1rem;
+  }
+  .about__first {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--plum);
+    font-size: 1.3rem;
+    line-height: 1.4;
+  }
+  .about__creds {
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+  }
+  @media (min-width: 56rem) {
+    .about {
+      grid-template-columns: 1fr 1.3fr;
+    }
+  }
+</style>

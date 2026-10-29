@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Resonance from '../components/Resonance.astro';
+import Method from '../components/Method.astro';
+import Package from '../components/Package.astro';
+import Fit from '../components/Fit.astro';
+import About from '../components/About.astro';
+import Cycle from '../components/Cycle.astro';
+import Founding from '../components/Founding.astro';
+import Faq from '../components/Faq.astro';
+import Enquiry from '../components/Enquiry.astro';
+import Footer from '../components/Footer.astro';
+import { founding } from '../content/site';
+---
+
+<Base>
+  <Header />
+  <main id="main">
+    <Hero />
+    <Resonance />
+    <Method />
+    <Package />
+    <Fit />
+    <About />
+    <Cycle />
+    {founding.enabled && <Founding />}
+    <Faq />
+    <Enquiry />
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,364 @@
+---
+import Icon from './Icon.astro';
+import { enquiry, contact, instagramUrl, cta } from '../content/site';
+
+// If a form service endpoint is configured, the form POSTs to it.
+// Otherwise it falls back to opening a pre-filled email — still a real, working route.
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+
+<section class="section" id="enquire" aria-labelledby="enquire-title">
+  <div class="container enquire">
+    <div class="enquire__intro">
+      <p class="eyebrow">Enquire</p>
+      <h2 id="enquire-title">{enquiry.heading}</h2>
+      <p class="lead">{enquiry.intro}</p>
+
+      <div class="routes">
+        <p class="routes__label">Prefer another route?</p>
+        <a class="route" href={instagramUrl} rel="noopener" target="_blank">
+          <Icon name="instagram" size={22} />
+          <span>Message on Instagram<br /><small>@{contact.instagramHandle}</small></span>
+        </a>
+        <a class="route" href={`mailto:${contact.email}`}>
+          <Icon name="mail" size={22} />
+          <span>Send an email<br /><small>{contact.email}</small></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <form
+        id="enquiry-form"
+        class="form"
+        novalidate
+        data-endpoint={endpoint}
+        data-email={contact.email}
+        data-next={enquiry.nextStep}
+        aria-describedby="form-privacy"
+      >
+        <div class="form__errors" id="form-errors" role="alert" tabindex="-1" hidden></div>
+
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="given-name" required maxlength="80" aria-describedby="f-name-err" />
+          <p class="field__error" id="f-name-err" hidden>Please tell me your name.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="120" aria-describedby="f-email-err" />
+          <p class="field__error" id="f-email-err" hidden>Please enter a valid email address so I can reply.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-goal">What would you most like help with?</label>
+          <select id="f-goal" name="goal" required aria-describedby="f-goal-err">
+            <option value="">Choose one</option>
+            {enquiry.goals.map((g) => <option value={g}>{g}</option>)}
+          </select>
+          <p class="field__error" id="f-goal-err" hidden>Please choose the option closest to your goal.</p>
+        </div>
+
+        <div class="field">
+          <label for="f-message">Anything else you’d like to share? <span class="optional">(optional)</span></label>
+          <textarea id="f-message" name="message" rows="4" maxlength="1500" aria-describedby="f-message-hint"></textarea>
+          <p class="field__hint" id="f-message-hint">
+            Please don’t include health or medical details here. We can talk about those privately later if relevant.
+          </p>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="f-company">Leave this field empty</label>
+          <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="field field--check">
+          <input id="f-consent" name="consent" type="checkbox" required aria-describedby="f-consent-err" />
+          <label for="f-consent">
+            I agree that Strong with Mila may use these details to reply to my enquiry, as described in the
+            <a href="/privacy">privacy policy</a>.
+          </label>
+          <p class="field__error" id="f-consent-err" hidden>Please tick this box so I’m allowed to reply.</p>
+        </div>
+
+        <button class="btn btn--primary form__submit" type="submit">{cta.primary === 'Enquire about coaching' ? 'Send my enquiry' : cta.primary}</button>
+        <p class="form__privacy" id="form-privacy">
+          Your details are only used to reply to you. No newsletter, no sharing.
+        </p>
+      </form>
+
+      <div class="form__done" id="form-done" tabindex="-1" hidden>
+        <Icon name="check" size={40} />
+        <h3 id="form-done-title">Thank you</h3>
+        <p id="form-done-text"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
+  const errorsBox = document.getElementById('form-errors');
+  const done = document.getElementById('form-done');
+  const doneText = document.getElementById('form-done-text');
+
+  type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+  function fieldError(el: Field): string | null {
+    if (el.type === 'checkbox') return (el as HTMLInputElement).checked ? null : 'consent';
+    const v = el.value.trim();
+    if (el.required && !v) return 'empty';
+    if (el.type === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'email';
+    return null;
+  }
+
+  function showError(el: Field, show: boolean) {
+    const msg = document.getElementById(`${el.id}-err`);
+    el.toggleAttribute('aria-invalid', show);
+    if (msg) msg.hidden = !show;
+  }
+
+  if (form && errorsBox && done && doneText) {
+    const required = Array.from(form.querySelectorAll<Field>('[required]'));
+
+    required.forEach((el) =>
+      el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'blur', () => {
+        if (el.hasAttribute('aria-invalid')) showError(el, !!fieldError(el));
+      }),
+    );
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const invalid = required.filter((el) => {
+        const bad = !!fieldError(el);
+        showError(el, bad);
+        return bad;
+      });
+
+      if (invalid.length) {
+        errorsBox.innerHTML = `<p>Please check ${invalid.length === 1 ? 'one field' : `${invalid.length} fields`}:</p><ul>${invalid
+          .map((el) => `<li><a href="#${el.id}">${document.getElementById(`${el.id}-err`)?.textContent ?? ''}</a></li>`)
+          .join('')}</ul>`;
+        errorsBox.hidden = false;
+        errorsBox.focus();
+        return;
+      }
+      errorsBox.hidden = true;
+
+      const data = new FormData(form);
+      if (data.get('company')) return; // honeypot: silently ignore bots
+
+      const payload = {
+        name: String(data.get('name')).trim(),
+        email: String(data.get('email')).trim(),
+        goal: String(data.get('goal')),
+        message: String(data.get('message') ?? '').trim(),
+        consent: true,
+      };
+
+      const endpoint = form.dataset.endpoint;
+      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+
+      if (!endpoint) {
+        // Fallback: open the visitor's email app with the enquiry pre-filled.
+        const body = `Hi Mila,\n\nName: ${payload.name}\nGoal: ${payload.goal}\n\n${payload.message}\n\n(I agree you may use these details to reply to my enquiry.)`;
+        const href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Coaching enquiry from ' + payload.name)}&body=${encodeURIComponent(body)}`;
+        window.location.href = href;
+        doneText.innerHTML = `Your email app should now open with your message ready to send. Nothing opened? Email <a href="mailto:${form.dataset.email}">${form.dataset.email}</a> directly.`;
+        form.hidden = true;
+        done.hidden = false;
+        done.focus();
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        doneText.textContent = `Your enquiry has been sent. I’ll reply personally to ${payload.email}. ${form.dataset.next ?? ''}`;
+        form.hidden = true;
+        done.hidden = false;
+        done.focus();
+      } catch {
+        errorsBox.innerHTML = `<p>Sorry, your message couldn’t be sent just now. Please try again, or email <a href="mailto:${form.dataset.email}">${form.dataset.email}</a>.</p>`;
+        errorsBox.hidden = false;
+        errorsBox.focus();
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Send my enquiry';
+      }
+    });
+  }
+</script>
+
+<style>
+  .enquire {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    align-items: start;
+  }
+  .routes {
+    margin-top: 2rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .routes__label {
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .route {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    text-decoration: none;
+    color: var(--brown);
+    line-height: 1.35;
+    transition: border-color 0.2s;
+  }
+  .route:hover {
+    border-color: var(--plum);
+  }
+  .route :global(svg) {
+    color: var(--plum);
+    flex: none;
+  }
+  .route small {
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+  }
+  .form-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .form {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  label {
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .optional {
+    font-weight: 400;
+  }
+  input[type='text'],
+  input[type='email'],
+  select,
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--brown);
+    background: var(--cream);
+    border: 1.5px solid #b9a9a2;
+    border-radius: 0.65rem;
+    padding: 0.75rem 0.9rem;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 7rem;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--navy);
+    outline-offset: 1px;
+    border-color: var(--navy);
+  }
+  [aria-invalid] {
+    border-color: var(--burgundy) !important;
+  }
+  .field__error {
+    margin: 0;
+    color: var(--burgundy);
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+  .field__error::before {
+    content: '! ';
+  }
+  .field__hint {
+    margin: 0;
+    font-size: 0.84rem;
+  }
+  .field--check {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 0.75rem;
+  }
+  .field--check input {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-top: 0.15rem;
+    accent-color: var(--plum);
+  }
+  .field--check label {
+    font-weight: 400;
+    font-size: 0.9rem;
+  }
+  .field--check .field__error {
+    grid-column: 2;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .form__errors {
+    padding: 1rem 1.25rem;
+    border: 1.5px solid var(--burgundy);
+    border-radius: 0.65rem;
+    color: var(--burgundy);
+    font-size: 0.92rem;
+  }
+  .form__errors :global(p) {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+  }
+  .form__errors :global(ul) {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  .form__errors :global(a) {
+    color: var(--burgundy);
+  }
+  .form__submit {
+    width: 100%;
+  }
+  .form__privacy {
+    margin: -0.5rem 0 0;
+    font-size: 0.84rem;
+    text-align: center;
+  }
+  .form__done {
+    text-align: center;
+    padding-block: 2rem;
+  }
+  .form__done :global(svg) {
+    color: var(--forest);
+    margin: 0 auto 1rem;
+  }
+  @media (min-width: 60rem) {
+    .enquire {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+</style>

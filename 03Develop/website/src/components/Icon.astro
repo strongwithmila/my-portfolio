@@ -1,0 +1,75 @@
+---
+// Fine line icons in the brand's outline style. Decorative by default (aria-hidden).
+type Name = 'train' | 'fuel' | 'understand' | 'moon' | 'check' | 'cross' | 'instagram' | 'mail' | 'pin';
+interface Props {
+  name: Name;
+  size?: number;
+  class?: string;
+}
+const { name, size = 24, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {name === 'train' && (
+    <>
+      <rect x="7" y="16" width="5" height="16" rx="1.5" />
+      <rect x="12" y="19" width="4" height="10" rx="1" />
+      <rect x="36" y="16" width="5" height="16" rx="1.5" />
+      <rect x="32" y="19" width="4" height="10" rx="1" />
+      <path d="M16 24h16M4 24h3M41 24h3" />
+    </>
+  )}
+  {name === 'fuel' && (
+    <>
+      <path d="M6 24h36a18 12 0 0 1-36 0Z" />
+      <path d="M17 36h14" />
+      <path d="M14 24c0-4 3-7 7-7M24 24c1-5 5-8 9-7M31 24c0-2 2-4 4-4" />
+      <circle cx="20" cy="13" r="2" />
+      <path d="M28 10c2 1 3 3 2 5" />
+    </>
+  )}
+  {name === 'understand' && (
+    <>
+      <circle cx="24" cy="24" r="15" />
+      <circle cx="24" cy="9" r="2.5" fill="currentColor" />
+      <circle cx="39" cy="24" r="2.5" />
+      <circle cx="24" cy="39" r="2.5" fill="currentColor" />
+      <circle cx="9" cy="24" r="2.5" />
+      <path d="M24 17v14M17 24h14" stroke-dasharray="2 3" />
+    </>
+  )}
+  {name === 'moon' && <path d="M30 8a16 16 0 1 0 10 26A13 13 0 0 1 30 8Z" />}
+  {name === 'check' && <path d="m12 25 8 8 16-18" />}
+  {name === 'cross' && <path d="m14 14 20 20M34 14 14 34" />}
+  {name === 'instagram' && (
+    <>
+      <rect x="8" y="8" width="32" height="32" rx="9" />
+      <circle cx="24" cy="24" r="7.5" />
+      <circle cx="33.5" cy="14.5" r="1.2" fill="currentColor" />
+    </>
+  )}
+  {name === 'mail' && (
+    <>
+      <rect x="6" y="11" width="36" height="26" rx="3" />
+      <path d="m7 13 17 13 17-13" />
+    </>
+  )}
+  {name === 'pin' && (
+    <>
+      <path d="M24 42s13-12 13-23a13 13 0 0 0-26 0c0 11 13 23 13 23Z" />
+      <circle cx="24" cy="19" r="4.5" />
+    </>
+  )}
+</svg>

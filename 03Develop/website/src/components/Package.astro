@@ -1,0 +1,173 @@
+---
+import Icon from './Icon.astro';
+import { offer, cta, founding } from '../content/site';
+---
+
+<section class="section section--alt" id="package" aria-labelledby="package-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">The coaching package</p>
+      <h2 id="package-title">{offer.name || offer.title}</h2>
+      {offer.name && <p class="subtitle">{offer.title}</p>}
+      <p class="lead">{offer.summary}</p>
+    </div>
+
+    <div class="package">
+      <ol class="timeline" aria-label="How the four weeks work">
+        {offer.steps.map((s, i) => (
+          <li class="step">
+            <span class="step__dot" aria-hidden="true">{i + 1}</span>
+            <p class="step__week">{s.week}</p>
+            <h3 class="step__title">{s.title}</h3>
+            <p class="step__detail">{s.detail}</p>
+          </li>
+        ))}
+      </ol>
+
+      <aside class="includes" aria-labelledby="includes-title">
+        <h3 id="includes-title">What’s included</h3>
+        <ul>
+          {offer.includes.map((item) => (
+            <li><Icon name="check" size={20} class="includes__check" />{item}</li>
+          ))}
+        </ul>
+        <dl class="includes__facts">
+          <div>
+            <dt>Where</dt>
+            <dd>{offer.location}</dd>
+          </div>
+          <div>
+            <dt>Investment</dt>
+            <dd>{offer.price || offer.priceNote}</dd>
+          </div>
+        </dl>
+        <a class="btn btn--primary includes__cta" href="#enquire">{cta.primary}</a>
+        {founding.enabled && <p class="includes__hint">{founding.heading} are available now.</p>}
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .subtitle {
+    font-weight: 600;
+    color: var(--plum);
+  }
+  .package {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 1.05rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    border-left: 1.5px dashed var(--line);
+  }
+  .step {
+    position: relative;
+    padding: 0 0 2rem 3.5rem;
+  }
+  .step:last-child {
+    padding-bottom: 0;
+  }
+  .step__dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1.5px solid var(--plum);
+    color: var(--plum);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .step__week {
+    margin: 0.2rem 0 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+  }
+  .step__title {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--brown);
+    margin-bottom: 0.35rem;
+  }
+  .step__detail {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .includes {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  .includes ul {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+  }
+  .includes li {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+  }
+  :global(.includes__check) {
+    flex: none;
+    color: var(--forest);
+    margin-top: 0.15rem;
+  }
+  .includes__facts {
+    margin: 0 0 1.75rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .includes__facts dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--plum);
+  }
+  .includes__facts dd {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .includes__cta {
+    width: 100%;
+  }
+  .includes__hint {
+    margin: 0.75rem 0 0;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  @media (min-width: 60rem) {
+    .package {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 4rem;
+    }
+    .includes {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+</style>
