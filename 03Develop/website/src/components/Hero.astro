@@ -224,7 +224,19 @@ import photo from '../assets/mila-water-bottle.png';
     }
     /* Scales with the screen so the headline always stays clear of the photo */
     h1 {
-      font-size: min(3.9vw, 4.5rem);
+      font-size: 3.9vw;
+    }
+    /* Smaller text and buttons grow a little on large monitors to stay in proportion */
+    .hero__eyebrow {
+      font-size: max(0.75rem, 0.55vw);
+    }
+    .hero__sub {
+      max-width: max(30rem, 26vw);
+      font-size: max(1.05rem, 0.85vw);
+    }
+    .hero__cta,
+    .hero__link {
+      font-size: max(0.82rem, 0.6vw);
     }
     .hero__media {
       position: static;
