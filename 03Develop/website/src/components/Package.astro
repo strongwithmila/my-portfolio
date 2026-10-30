@@ -167,9 +167,40 @@ import { offer, cta, founding } from '../content/site';
   }
   /* Desktop: journey on the left, package summary on the right */
   @media (min-width: 60rem) {
+    /* Wider panel stretched to the journey's height; facts side by side to keep it compact */
     .package {
-      grid-template-columns: 1.4fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: stretch;
+    }
+    .includes {
+      display: flex;
+      flex-direction: column;
+    }
+    .includes li {
+      padding-block: 0.35rem;
+    }
+    .includes__facts {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1.75rem;
+    }
+    .includes__cta {
+      margin-top: auto;
+    }
+    /* Spread the journey steps so the timeline ends level with the panel */
+    .journey {
+      display: flex;
+      flex-direction: column;
+    }
+    .timeline {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.6rem;
+    }
+    .step {
+      padding-bottom: 0;
     }
     .journey {
       grid-column: 1;
