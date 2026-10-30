@@ -88,30 +88,39 @@ export const resonance = {
   closeSupport: 'That’s where the Strong with Mila method begins.',
 };
 
+/**
+ * Method pillars. TODO(Mila): add a photo for each pillar — import it at the top of this file
+ * (like `aboutPhoto`) and set `image` and `imageAlt`. Until then a labelled placeholder shows.
+ */
 export const method = {
   heading: 'One method, three connected parts',
-  intro: 'Training, food and body awareness affect each other. We work on them together, and we adjust the plan instead of blaming the person.',
+  intro: 'Strength training, nutrition and body awareness—designed to work together.',
   pillars: [
     {
       key: 'train',
       name: 'Train',
       summary: 'Build strength with confidence.',
-      points: ['Onsite personal training', 'Technique and movement quality', 'Progressive strength', 'Confidence in the gym'],
+      description: 'Learn to move well, progress with purpose, and feel at home in the gym.',
+      image: null as ImageMetadata | null,
+      imageAlt: '',
     },
     {
       key: 'fuel',
       name: 'Fuel',
       summary: 'Structure without restriction.',
-      points: ['Macro-informed meal structure', 'Realistic meal suggestions', 'Protein and energy guidance', 'Enough food to support training'],
+      description: 'Make nutrition simpler with flexible guidance that supports your energy and training.',
+      image: null as ImageMetadata | null,
+      imageAlt: '',
     },
     {
       key: 'understand',
       name: 'Understand',
-      summary: 'Patterns are information, not verdicts.',
-      points: ['Energy, sleep, hunger and recovery', 'Optional cycle awareness', 'Adjusting expectations', 'Flexible, not dogmatic'],
+      summary: 'Your body gives you information.',
+      description: 'Recognise patterns in energy, recovery and wellbeing—and adapt with confidence.',
+      image: null as ImageMetadata | null,
+      imageAlt: '',
     },
   ],
-  close: 'The goal isn’t a perfect plan. It’s understanding your body well enough to build routines you can actually keep.',
 };
 
 /**

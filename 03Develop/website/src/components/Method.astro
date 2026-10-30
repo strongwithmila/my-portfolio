@@ -1,5 +1,5 @@
 ---
-import Icon from './Icon.astro';
+import { Picture } from 'astro:assets';
 import { method } from '../content/site';
 
 const accent: Record<string, string> = {
@@ -9,7 +9,7 @@ const accent: Record<string, string> = {
 };
 ---
 
-<section class="section" id="method" aria-labelledby="method-title">
+<section class="section section--alt" id="method" aria-labelledby="method-title">
   <div class="container">
     <div class="section-head section-head--center">
       <p class="eyebrow">The method</p>
@@ -20,80 +20,101 @@ const accent: Record<string, string> = {
     <ol class="pillars">
       {method.pillars.map((p, i) => (
         <li class="pillar" style={`--accent: ${accent[p.key]}`}>
-          <span class="pillar__num">0{i + 1}</span>
-          <Icon name={p.key as 'train' | 'fuel' | 'understand'} size={52} class="pillar__icon" />
+          <div class="pillar__media">
+            {p.image ? (
+              <Picture
+                src={p.image}
+                alt={p.imageAlt}
+                formats={['avif', 'webp']}
+                fallbackFormat="jpg"
+                widths={[400, 600, 900]}
+                sizes="(min-width: 52rem) 30vw, 90vw"
+              />
+            ) : (
+              <div class="pillar__placeholder" role="img" aria-label={`Photo coming soon: ${p.name}`}>
+                <span>Photo coming soon · {p.name}</span>
+              </div>
+            )}
+          </div>
+          <p class="pillar__label" aria-hidden="true">0{i + 1} / {p.name}</p>
           <h3>{p.name}</h3>
           <p class="pillar__summary">{p.summary}</p>
-          <ul>
-            {p.points.map((pt) => <li>{pt}</li>)}
-          </ul>
+          <p class="pillar__text">{p.description}</p>
         </li>
       ))}
     </ol>
-
-    <p class="method__close"><span>{method.close}</span></p>
   </div>
 </section>
 
 <style>
+  /* Phones: features stacked, image first */
   .pillars {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 1.25rem;
+    gap: clamp(3rem, 8vw, 4rem);
   }
-  .pillar {
-    position: relative;
-    padding: 2rem 1.75rem;
-    border-radius: var(--radius);
-    background: var(--white);
-    border: 1px solid var(--line);
+  .pillar__media {
+    aspect-ratio: 3 / 4;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: var(--cream);
+    /* Pillar colour along the top edge */
     border-top: 3px solid var(--accent);
   }
-  .pillar__num {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.5rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    color: var(--brown);
-    opacity: 0.7;
+  .pillar__media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  :global(.pillar__icon) {
+  .pillar__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px dashed var(--line);
+    border-radius: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgb(58 42 36 / 0.6);
+  }
+  .pillar__label {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 1rem;
   }
   .pillar h3 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.9rem, 1.6rem + 1vw, 2.4rem);
+    font-weight: 400;
     color: var(--accent);
-    margin-bottom: 0.25rem;
   }
   .pillar__summary {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
     font-weight: 600;
-    font-size: 0.95rem;
+    color: var(--brown);
   }
-  .pillar ul {
+  .pillar__text {
+    max-width: 26rem;
     margin: 0;
-    padding-left: 1.1rem;
     font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgb(58 42 36 / 0.85);
   }
-  .pillar li::marker {
-    color: var(--accent);
-  }
-  .method__close {
-    margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
-    max-width: 40rem;
-    text-align: center;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.45rem);
-    line-height: 1.45;
-    color: var(--plum);
-  }
+
+  /* Desktop: three editorial columns, images aligned across the top */
   @media (min-width: 52rem) {
     .pillars {
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: clamp(1.5rem, 3vw, 3rem);
     }
   }
 </style>
