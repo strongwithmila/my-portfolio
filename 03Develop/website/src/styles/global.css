@@ -19,6 +19,7 @@
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --max: 72rem;
   --radius: 1.25rem;
+  --header-h: 4.25rem;
   --section-y: clamp(4rem, 10vw, 7.5rem);
 }
 
@@ -108,6 +109,11 @@ a {
   max-width: var(--max);
   margin-inline: auto;
   padding-inline: var(--gutter);
+}
+/* Wider container for the header and hero, so they can use the full screen */
+.container--wide {
+  max-width: 90rem;
+  padding-inline: clamp(1rem, 6vw, 6rem);
 }
 
 .section {

@@ -1,98 +1,258 @@
 ---
+import { Image, Picture } from 'astro:assets';
 import Icon from './Icon.astro';
-import { hero, cta, contact } from '../content/site';
-import { url } from '../utils/url';
+import { hero } from '../content/site';
+import photo from '../assets/mila-water-bottle.png';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <p class="eyebrow"><Icon name="moon" size={16} class="hero__moon" /> {hero.eyebrow}</p>
-      <h1 id="hero-title">
-        {hero.headline}<span class="hero__accent"><span class="sr-only"> — </span>{hero.headlineAccent}</span>
-      </h1>
-      <p class="lead hero__sub">{hero.subheadline}</p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="#enquire">{cta.primary}</a>
-        <a class="btn btn--ghost" href="#method">{cta.secondary}</a>
-      </div>
-      <p class="hero__meta">
-        <Icon name="pin" size={18} /> Onsite in {contact.city.split(',')[0]} + digital check-ins
-      </p>
-    </div>
-
-    <figure class="hero__art">
-      <img src={url('/images/strong-with-mila-logo.svg')} alt={hero.logoAlt} width="1001" height="995" />
-    </figure>
+  <!-- Same photo, blurred and washed with cream behind the text (desktop) -->
+  <div class="hero__backdrop" aria-hidden="true">
+    <Image src={photo} alt="" width={480} format="webp" loading="eager" />
   </div>
+
+  <div class="container container--wide hero__inner">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">{hero.eyebrow}</p>
+      <h1 id="hero-title">
+        {hero.headline}<br />
+        <em>{hero.headlineAccent}</em> {hero.headlineEnd}
+      </h1>
+      <p class="hero__sub">{hero.subheadline}</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary hero__cta" href={hero.ctaHref}>
+          {hero.ctaLabel} <Icon name="arrow" size={18} />
+        </a>
+        <a class="hero__link" href={hero.secondaryHref}>
+          {hero.secondaryLabel} <Icon name="arrow" size={18} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__media">
+    <div class="hero__photo">
+      <Picture
+        src={photo}
+        alt={hero.photoAlt}
+        formats={['avif', 'webp']}
+        fallbackFormat="jpg"
+        widths={[480, 720, 1086]}
+        sizes="(min-width: 60rem) 50vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <!-- Curved divider between photo and text (phones and tablets) -->
+    <svg class="hero__lines hero__lines--stacked" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-2 1C30 14 70 14 102 1" />
+    </svg>
+  </div>
+
+  <!-- Fine curved lines, drawn over the whole hero (desktop) -->
+  <svg class="hero__lines hero__lines--wide" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <ellipse cx="100" cy="50" rx="50.6" ry="78.6" />
+    <path d="M0 64C13 72 25 82 31 100" />
+  </svg>
 </section>
 
 <style>
+  /* Phones and tablets: photo on top, text below on cream */
   .hero {
-    padding-block: clamp(3rem, 8vw, 6.5rem) clamp(4rem, 9vw, 7rem);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(ellipse 60% 70% at 18% 35%, rgb(255 253 250 / 0.9), transparent 70%),
+      var(--cream);
   }
-  .hero__grid {
-    display: grid;
-    gap: clamp(2.5rem, 6vw, 4rem);
-    align-items: center;
+  .hero__backdrop {
+    display: none;
   }
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: 0.5rem 3rem;
+  }
+  .hero__eyebrow {
+    margin: 0 0 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(58 42 36 / 0.78);
   }
   h1 {
-    font-size: clamp(2.3rem, 1.7rem + 2.4vw, 3.6rem);
-    letter-spacing: -0.01em;
-    margin-bottom: 1.5rem;
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.6rem, 1rem + 3.2vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
   }
-  .hero__accent {
-    display: block;
-    margin-top: 0.4rem;
-    font-size: 0.62em;
+  h1 em {
     font-style: italic;
-    line-height: 1.25;
-    color: var(--burgundy);
   }
   .hero__sub {
-    max-width: 36rem;
+    max-width: 30rem;
+    margin: 0 0 2rem;
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+    line-height: 1.7;
   }
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
-  .hero__meta {
-    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.75rem;
-    font-size: 0.9rem;
-    color: var(--brown);
+    gap: 1.25rem 2rem;
   }
-  .hero__art {
-    margin: 0;
-    max-width: 26rem;
-    justify-self: center;
+  .hero__cta,
+  .hero__link {
+    gap: 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .hero__cta {
+    padding: 0.95rem 1.75rem;
+  }
+  .hero__link {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 0.5rem;
+    color: var(--plum);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.4em;
+    transition: text-decoration-color 0.2s;
+  }
+  .hero__link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .hero__media {
+    position: relative;
+    order: -1;
+  }
+  .hero__photo {
+    aspect-ratio: 5 / 6;
+    max-height: 36rem;
     width: 100%;
+    /* Curved, softly blurred bottom edge where the photo meets the cream */
+    -webkit-mask-image: radial-gradient(ellipse 150% 100% at 50% 0%, #000 90%, transparent 97%);
+    mask-image: radial-gradient(ellipse 150% 100% at 50% 0%, #000 90%, transparent 97%);
   }
-  .hero__art img {
+  .hero__photo :global(img) {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    /* Zoom in a little so Mila stays the focus on small screens */
+    transform: scale(1.3);
+    transform-origin: 38% 40%;
   }
+
+  .hero__lines {
+    position: absolute;
+    pointer-events: none;
+    fill: none;
+    stroke: var(--clay);
+    stroke-width: 1;
+    opacity: 0.7;
+  }
+  .hero__lines * {
+    vector-effect: non-scaling-stroke;
+  }
+  .hero__lines--wide {
+    display: none;
+  }
+  .hero__lines--stacked {
+    left: 0;
+    bottom: -0.5rem;
+    width: 100%;
+    height: 3rem;
+  }
+
   @media (max-width: 30rem) {
-    .hero__actions .btn {
+    .hero__cta {
       width: 100%;
     }
-    .hero__art {
-      max-width: 18rem;
-    }
   }
+
+  /* Desktop: text on the left, photo on the right inside a large curve */
   @media (min-width: 60rem) {
-    .hero__grid {
-      grid-template-columns: 1.35fr 1fr;
+    .hero {
+      /* Slide under the transparent header so the photo reaches the top */
+      margin-top: calc(-1 * var(--header-h));
+      min-height: clamp(40rem, 100svh, 58rem);
+      flex-direction: row;
+      align-items: center;
+      background: var(--cream);
+    }
+    .hero__backdrop {
+      display: block;
+      position: absolute;
+      inset: 0;
+    }
+    .hero__backdrop :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 30% 40%;
+      filter: blur(28px) saturate(0.9);
+      transform: scale(1.15);
+    }
+    /* Cream wash so the text stays easy to read */
+    .hero__backdrop::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 65% at 22% 40%, rgb(255 253 250 / 0.75), transparent 75%),
+        linear-gradient(90deg, rgb(247 243 238 / 0.9) 0%, rgb(247 243 238 / 0.78) 40%, rgb(247 243 238 / 0.55) 60%);
+    }
+    .hero__inner {
+      padding-block: calc(var(--header-h) + 3rem) 4rem;
+    }
+    .hero__copy {
+      max-width: 40vw;
+    }
+    .hero__actions {
+      flex-wrap: nowrap;
+      width: max-content;
+    }
+    /* Scales with the screen so the headline always stays clear of the photo */
+    h1 {
+      font-size: min(3.9vw, 4.5rem);
+    }
+    .hero__media {
+      position: static;
+      order: 0;
+    }
+    .hero__photo {
+      position: absolute;
+      inset: 0 0 0 50%;
+      width: auto;
+      max-height: none;
+      aspect-ratio: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+      clip-path: ellipse(100% 78% at 100% 50%);
+      z-index: 1;
+    }
+    .hero__photo :global(img) {
+      object-position: 30% 30%;
+      transform: none;
+    }
+    .hero__lines--wide {
+      display: block;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero__lines--stacked {
+      display: none;
     }
   }
 </style>

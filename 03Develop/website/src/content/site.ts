@@ -48,12 +48,18 @@ export const cta = {
 };
 
 export const hero = {
-  eyebrow: 'Women’s strength coaching · Berlin · in English',
-  headline: 'Women’s strength & nutrition coaching in Berlin',
-  headlineAccent: 'built around your body, your cycle and your real life.',
+  eyebrow: 'Women’s strength coaching · Berlin',
+  headline: 'Build strength.',
+  // Shown in italics at the start of the second line.
+  headlineAccent: 'Understand',
+  headlineEnd: 'your body.',
   subheadline:
-    'Onsite personal training, realistic nutrition support and weekly check-ins for women who want to build strength, structure and confidence without extremes.',
-  logoAlt: 'Strong with Mila logo: Strength, Nutrition, Cycle Aware',
+    'Personal strength training, practical nutrition, and body literacy to help you feel stronger and more confident.',
+  ctaLabel: 'Explore coaching',
+  ctaHref: '#package',
+  secondaryLabel: 'Meet Mila',
+  secondaryHref: '#about',
+  photoAlt: 'Mila sitting on the floor of a bright living room, holding a Strong with Mila water bottle.',
 };
 
 export const resonance = {

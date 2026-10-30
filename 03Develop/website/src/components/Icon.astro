@@ -1,6 +1,6 @@
 ---
 // Fine line icons in the brand's outline style. Decorative by default (aria-hidden).
-type Name = 'train' | 'fuel' | 'understand' | 'moon' | 'check' | 'cross' | 'instagram' | 'mail' | 'pin';
+type Name = 'train' | 'fuel' | 'understand' | 'moon' | 'check' | 'cross' | 'instagram' | 'mail' | 'pin' | 'arrow';
 interface Props {
   name: Name;
   size?: number;
@@ -66,6 +66,7 @@ const { name, size = 24, class: className } = Astro.props;
       <path d="m7 13 17 13 17-13" />
     </>
   )}
+  {name === 'arrow' && <path d="M8 24h32M30 14l10 10-10 10" />}
   {name === 'pin' && (
     <>
       <path d="M24 42s13-12 13-23a13 13 0 0 0-26 0c0 11 13 23 13 23Z" />
