@@ -65,14 +65,27 @@ export const hero = {
 };
 
 export const resonance = {
-  heading: 'Health-conscious, but still stuck?',
-  intro: 'This is for you if you care about your health, and the usual advice still hasn’t clicked.',
-  cards: [
-    { quote: 'I don’t know what to do at the gym.', detail: 'You want to train, but you’re unsure if your form is right.' },
-    { quote: 'I want nutrition structure, not another diet.', detail: 'You want a way of eating that supports you, not one that restricts you.' },
-    { quote: 'My energy changes across the month.', detail: 'You notice shifts in energy, cravings and motivation, and want to understand them.' },
+  eyebrow: 'A different approach to getting stronger',
+  heading: 'You care about your health.',
+  // Second sentence of the headline, shown in italics
+  headingAccent: 'You just want an approach that makes sense.',
+  intro: 'Maybe some of this feels familiar.',
+  points: [
+    {
+      title: 'You want to feel confident at the gym.',
+      text: 'But knowing what to do, how to do it, and whether you’re making progress isn’t always straightforward.',
+    },
+    {
+      title: 'You want nutrition to feel simpler.',
+      text: 'A little more structure would help. Another restrictive diet isn’t what you’re looking for.',
+    },
+    {
+      title: 'You want to understand your body’s signals.',
+      text: 'Your energy, appetite, or motivation may change, and you’d like to know how to respond without second-guessing yourself.',
+    },
   ],
-  close: 'You don’t need more extremes. You need support, structure and a plan that fits your life.',
+  close: 'You don’t need a perfect routine. You need one that works for you.',
+  closeSupport: 'That’s where the Strong with Mila method begins.',
 };
 
 export const method = {

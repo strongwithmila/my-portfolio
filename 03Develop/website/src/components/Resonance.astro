@@ -2,64 +2,163 @@
 import { resonance } from '../content/site';
 ---
 
-<section class="section section--alt" aria-labelledby="resonance-title">
+<section class="section resonance" aria-labelledby="resonance-title">
   <div class="container">
-    <div class="section-head section-head--center">
-      <h2 id="resonance-title">{resonance.heading}</h2>
-      <p class="lead">{resonance.intro}</p>
+    <div class="resonance__grid">
+      <div class="resonance__head">
+        <p class="resonance__eyebrow">{resonance.eyebrow}</p>
+        <h2 id="resonance-title">
+          {resonance.heading} <em>{resonance.headingAccent}</em>
+        </h2>
+        <p class="resonance__intro">{resonance.intro}</p>
+      </div>
+
+      <ol class="points">
+        {resonance.points.map((p, i) => (
+          <li class="point">
+            <span class="point__num" aria-hidden="true">0{i + 1}</span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ol>
     </div>
 
-    <ul class="cards">
-      {resonance.cards.map((c) => (
-        <li class="card">
-          <p class="card__quote">“{c.quote}”</p>
-          <p class="card__detail">{c.detail}</p>
-        </li>
-      ))}
-    </ul>
-
-    <p class="close">{resonance.close}</p>
+    <div class="resonance__close">
+      <p class="resonance__statement">{resonance.close}</p>
+      <p class="resonance__support">{resonance.closeSupport}</p>
+    </div>
   </div>
 </section>
 
 <style>
-  .cards {
+  /* No bottom padding: the closing line runs straight into the method section */
+  .resonance {
+    padding-bottom: 0;
+  }
+  .resonance__head {
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+  .resonance__eyebrow {
+    margin: 0 0 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(58 42 36 / 0.78);
+  }
+  /* Headline in two voices: a quiet lead-in, then the italic second sentence as the focal point */
+  h2 {
+    max-width: 40rem;
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.65rem);
+    font-weight: 400;
+    line-height: 1.3;
+    color: rgb(58 42 36 / 0.85);
+  }
+  h2 em {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: clamp(2.3rem, 1.6rem + 2.6vw, 3.6rem);
+    font-style: italic;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--plum);
+    text-wrap: balance;
+  }
+  .resonance__intro {
+    margin: 0;
+    font-size: 1.05rem;
+    color: rgb(58 42 36 / 0.85);
+  }
+
+  /* Phones: statements stacked with fine horizontal separators */
+  .points {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 1rem;
   }
-  .card {
-    background: var(--cream);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    border: 1px solid var(--line);
+  .point {
+    padding-block: 2rem;
+    border-top: 1px solid var(--line);
   }
-  .card__quote {
+  .point__num {
+    display: block;
+    margin-bottom: 1rem;
     font-family: var(--font-serif);
-    font-size: 1.3rem;
-    line-height: 1.35;
-    color: var(--plum);
-    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--clay);
   }
-  .card__detail {
+  .point h3 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+  .point p {
     margin: 0;
+    max-width: 30rem;
     font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgb(58 42 36 / 0.85);
   }
-  .close {
-    max-width: 34rem;
-    margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
+
+  /* Closing statement: a quiet transition into the method section below */
+  .resonance__close {
+    margin-top: clamp(3rem, 7vw, 5.5rem);
     text-align: center;
+  }
+  .resonance__statement {
+    max-width: 30rem;
+    margin: 0 auto 0.75rem;
     font-family: var(--font-serif);
-    font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.6rem);
+    font-style: italic;
+    font-size: clamp(1.3rem, 1.15rem + 0.7vw, 1.65rem);
     line-height: 1.4;
     color: var(--plum);
+    text-wrap: balance;
   }
-  @media (min-width: 48rem) {
-    .cards {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+  .resonance__support {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgb(58 42 36 / 0.85);
+  }
+  .resonance__close::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: clamp(3.5rem, 8vw, 5.5rem);
+    margin: clamp(2rem, 4vw, 2.5rem) auto 0;
+    background: var(--plum);
+  }
+
+  /* Desktop: heading on the left (about 43%), statements stacked on the right (about 50%),
+     with the remaining width as the gutter between them */
+  @media (min-width: 56rem) {
+    .resonance__grid {
+      display: grid;
+      grid-template-columns: 43% 50%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .resonance__head {
+      margin-bottom: 0;
+    }
+    .point {
+      padding-block: 0 2rem;
+      border-top: 0;
+    }
+    .point + .point {
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .point:last-child {
+      padding-bottom: 0;
+    }
+    .point p {
+      max-width: 34rem;
     }
   }
 </style>
