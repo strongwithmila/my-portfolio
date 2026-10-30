@@ -8,6 +8,8 @@
  *  Anything marked `TODO(Mila)` is a placeholder or an unconfirmed
  *  decision. Do not publish until each one is confirmed.
  */
+import type { ImageMetadata } from 'astro';
+import aboutPhoto from '../assets/mila-portrait.png';
 
 export interface FaqItem {
   question: string;
@@ -156,7 +158,7 @@ export const fit = {
 /**
  * TODO(Mila): this story is the draft from the website brief. Edit freely;
  * add credentials only once they are real and confirmed.
- * Set `photo` to an image path in /public (e.g. '/images/mila.jpg') with honest alt text.
+ * To change the photo, replace src/assets/mila-portrait.png (or import another image) and update `photoAlt`.
  */
 export const about = {
   heading: 'Hi, I’m Mila',
@@ -167,8 +169,8 @@ export const about = {
     'Now I’m building Strong with Mila to help other women feel supported in that same process, with training, nutrition and body literacy that feel realistic, not extreme.',
   ],
   note: 'support changed everything',
-  photo: '' as string,
-  photoAlt: '',
+  photo: aboutPhoto as ImageMetadata | null,
+  photoAlt: 'Mila sitting on a sofa at home, resting her chin on her hand and smiling.',
   credentials: [] as string[],
 };
 

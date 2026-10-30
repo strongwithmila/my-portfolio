@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import { about } from '../content/site';
 ---
 
@@ -6,7 +7,16 @@ import { about } from '../content/site';
   <div class="container about">
     <figure class="about__media">
       {about.photo ? (
-        <img src={about.photo} alt={about.photoAlt} width="560" height="700" loading="lazy" decoding="async" />
+        <div class="about__frame">
+          <Picture
+            src={about.photo}
+            alt={about.photoAlt}
+            formats={['avif', 'webp']}
+            fallbackFormat="jpg"
+            widths={[400, 600, 800]}
+            sizes="(min-width: 56rem) 24rem, 90vw"
+          />
+        </div>
       ) : (
         <div class="about__placeholder" role="img" aria-label="Photo of Mila coming soon">
           <svg viewBox="0 0 200 250" fill="none" stroke="var(--plum)" stroke-width="1.2" aria-hidden="true">
@@ -46,12 +56,45 @@ import { about } from '../content/site';
     justify-self: center;
     text-align: center;
   }
-  .about__media img,
+  .about__media :global(img),
   .about__placeholder {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: 12rem 12rem var(--radius) var(--radius);
+  }
+  .about__media :global(img) {
+    display: block;
+    height: auto;
+    object-position: 50% 35%;
+  }
+  /* Decorative deep plum lines framing the arch */
+  .about__frame {
+    position: relative;
+    isolation: isolate;
+    margin: 1.25rem 1.25rem 2rem;
+  }
+  .about__frame::before,
+  .about__frame::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    border: 1.5px solid var(--plum);
+    border-radius: 13rem 13rem calc(var(--radius) + 0.6rem) calc(var(--radius) + 0.6rem);
+  }
+  /* Fine outline just around the photo */
+  .about__frame::before {
+    inset: -0.6rem;
+  }
+  /* Second outline, shifted down and to the right */
+  .about__frame::after {
+    inset: -0.6rem;
+    transform: translate(1rem, 1rem);
+    z-index: -1;
+  }
+  .about__frame :global(picture) {
+    position: relative;
+    display: block;
   }
   .about__placeholder {
     display: grid;
