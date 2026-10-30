@@ -130,28 +130,30 @@ export const method = {
  */
 export const offer = {
   name: '' as string,
-  title: 'Your 4-week strength & nutrition foundation',
-  summary: 'Onsite personal training in Berlin, a nutrition coaching session and weekly digital check-ins, over four weeks.',
+  title: 'Four weeks to build your foundation.',
+  summary:
+    'Personal strength training in Berlin, practical nutrition guidance, and ongoing support to help you build confidence and consistency.',
   // TODO(Mila): price not confirmed. Leave '' to show `priceNote` instead.
   price: '' as string,
-  priceNote: 'Pricing is shared personally after a short fit check.',
-  // TODO(Mila): confirm the onsite location.
-  location: 'Berlin (exact studio to be confirmed)',
+  priceNote: 'Pricing shared after a short fit check.',
+  // TODO(Mila): confirm the onsite location (exact studio) before publishing.
+  location: 'Berlin · In-person and digital',
+  journeyHeading: 'Your coaching journey',
+  // Phases within the package, not one phase per week.
   steps: [
-    { week: 'Before you start', title: 'Digital intake & goal-setting call', detail: 'We talk through your goals, training and nutrition history, routine, and how you’d like to be supported.' },
-    { week: 'Week 1', title: 'Nutrition coaching + first training session', detail: 'Realistic meal suggestions and protein and energy guidance, then your first guided strength session.' },
-    { week: 'Week 1', title: 'Two more onsite sessions', detail: 'Technique, movement coaching and a strength foundation you understand, with exercises chosen for you.' },
-    { week: 'Weeks 1–4', title: 'Weekly digital check-ins', detail: 'Training, food, energy, recovery and, if you like, cycle observations. We adjust as we go.' },
-    { week: 'Week 4', title: 'Final onsite progress session', detail: 'Strength check, movement review, progress measurements you agree to, and recommended next steps.' },
+    { title: 'Get to know you', detail: 'A digital goal-setting call to understand your starting point, priorities and routine.' },
+    { title: 'Build your foundations', detail: 'Three guided onsite sessions to develop technique, confidence and a training direction.' },
+    { title: 'Learn, adapt, progress', detail: 'Nutrition coaching and weekly check-ins help you build structure that fits real life.' },
+    { title: 'See how far you’ve come', detail: 'A final onsite progression review to reflect on your progress and plan your next steps.' },
   ],
   includes: [
-    '1 digital intake call',
-    '3 onsite personal training sessions',
+    '1 digital goal-setting call',
+    '3 onsite training sessions',
     '1 nutrition coaching session',
-    'Macro-informed meal suggestions',
+    'Personalised training direction',
     'Weekly digital check-ins',
-    '1 final onsite strength & progress review',
-    'Next-step recommendations',
+    'Cycle-aware guidance when relevant',
+    '1 final onsite progression review',
   ],
 };
 

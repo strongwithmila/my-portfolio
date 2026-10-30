@@ -13,17 +13,7 @@ import { offer, cta, founding } from '../content/site';
     </div>
 
     <div class="package">
-      <ol class="timeline" aria-label="How the four weeks work">
-        {offer.steps.map((s, i) => (
-          <li class="step">
-            <span class="step__dot" aria-hidden="true">{i + 1}</span>
-            <p class="step__week">{s.week}</p>
-            <h3 class="step__title">{s.title}</h3>
-            <p class="step__detail">{s.detail}</p>
-          </li>
-        ))}
-      </ol>
-
+      <!-- First in the markup so phones show it straight after the intro; placed in the right column on desktop -->
       <aside class="includes" aria-labelledby="includes-title">
         <h3 id="includes-title">What’s included</h3>
         <ul>
@@ -44,6 +34,19 @@ import { offer, cta, founding } from '../content/site';
         <a class="btn btn--primary includes__cta" href="#enquire">{cta.primary}</a>
         {founding.enabled && <p class="includes__hint">{founding.heading} are available now.</p>}
       </aside>
+
+      <div class="journey">
+        <h3 class="journey__title" id="journey-title">{offer.journeyHeading}</h3>
+        <ol class="timeline" aria-labelledby="journey-title">
+          {offer.steps.map((s, i) => (
+            <li class="step">
+              <span class="step__dot" aria-hidden="true">{i + 1}</span>
+              <h4 class="step__title">{s.title}</h4>
+              <p class="step__detail">{s.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -57,6 +60,15 @@ import { offer, cta, founding } from '../content/site';
     display: grid;
     gap: 2.5rem;
     align-items: start;
+  }
+  .journey__title {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--plum);
   }
   .timeline {
     list-style: none;
@@ -74,7 +86,7 @@ import { offer, cta, founding } from '../content/site';
   }
   .step {
     position: relative;
-    padding: 0 0 2rem 3.5rem;
+    padding: 0 0 1.6rem 3.5rem;
   }
   .step:last-child {
     padding-bottom: 0;
@@ -94,20 +106,13 @@ import { offer, cta, founding } from '../content/site';
     font-weight: 600;
     font-size: 0.85rem;
   }
-  .step__week {
-    margin: 0.2rem 0 0.15rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--burgundy);
-  }
   .step__title {
+    margin: 0.3rem 0 0.3rem;
     font-family: var(--font-sans);
     font-size: 1.1rem;
     font-weight: 600;
+    line-height: 1.4;
     color: var(--brown);
-    margin-bottom: 0.35rem;
   }
   .step__detail {
     margin: 0;
@@ -160,14 +165,19 @@ import { offer, cta, founding } from '../content/site';
     text-align: center;
     font-size: 0.85rem;
   }
+  /* Desktop: journey on the left, package summary on the right */
   @media (min-width: 60rem) {
     .package {
       grid-template-columns: 1.4fr 1fr;
       gap: 4rem;
     }
+    .journey {
+      grid-column: 1;
+      grid-row: 1;
+    }
     .includes {
-      position: sticky;
-      top: 6rem;
+      grid-column: 2;
+      grid-row: 1;
     }
   }
 </style>
