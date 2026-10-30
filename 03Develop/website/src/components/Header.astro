@@ -22,9 +22,11 @@ const links = [
       </button>
       <ul id="nav-menu" class="header__menu">
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
-        <li class="header__enquire"><a href="#enquire">Enquire</a></li>
       </ul>
     </nav>
+
+    <!-- Opens the enquiry pop-up; without JavaScript it scrolls to the form -->
+    <a class="btn btn--primary header__cta" href="#enquire" data-open-enquiry>Enquire</a>
   </div>
 </header>
 
@@ -74,10 +76,52 @@ const links = [
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     min-height: var(--header-h);
   }
   .header__brand {
     text-decoration: none;
+    white-space: nowrap;
+  }
+  /* Phones: logo, then the Enquire button and the menu icon on the right */
+  .header__cta {
+    order: 1;
+    margin-left: auto;
+    margin-right: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  nav {
+    order: 2;
+  }
+  @media (max-width: 26rem) {
+    .header__brand :global(.wordmark__strong) {
+      font-size: 1.35rem;
+    }
+    .header__brand :global(.wordmark__with) {
+      font-size: 1.4rem;
+    }
+    .header__cta {
+      margin-right: 0.25rem;
+      padding-inline: 0.9rem;
+      letter-spacing: 0.12em;
+    }
+  }
+  @media (max-width: 22rem) {
+    .header__brand :global(.wordmark__strong) {
+      font-size: 1.15rem;
+    }
+    .header__brand :global(.wordmark__with) {
+      font-size: 1.2rem;
+    }
+    .header__cta {
+      margin-right: 0;
+      padding-inline: 0.75rem;
+    }
   }
   .header__toggle {
     display: grid;
@@ -158,9 +202,17 @@ const links = [
     .header__brand {
       justify-self: start;
     }
-    .header__toggle,
-    .header__enquire {
+    .header__toggle {
       display: none;
+    }
+    nav,
+    .header__cta {
+      order: 0;
+    }
+    .header__cta {
+      justify-self: end;
+      margin: 0;
+      padding: 0.65rem 1.5rem;
     }
     .header__menu {
       display: flex;
